@@ -34,9 +34,14 @@ namespace ReceptMT.API.Controllers
                 CreatedTime = s.CreatedDate, 
                 Items = s.ShoppingListItems.Select(i => new ShoppingListItemDTO
                 {
-                    Amount = i.Amount.ToString(), Unit = i.Unit, Product = i.Product.Name,
-                    FromMenuId = s.MenuId, FromMenuName = s.Menu == null ? "" : s.Menu.Name,
-                    FromRecipeId = i.FromRecipeId, FromRecipeName = i.FromRecipe == null ? "" : i.FromRecipe.Title, Id = i.Id,
+                    Amount = i.Amount.ToString(), 
+                    Unit = i.Unit, 
+                    Product = i.Product.Name,
+                    FromMenuId = s.MenuId, 
+                    FromMenuName = s.Menu == null ? "" : s.Menu.Name,
+                    FromRecipeId = i.FromRecipeId, 
+                    FromRecipeName = i.FromRecipe == null ? "" : i.FromRecipe.Title, 
+                    Id = i.Id,
                     IsDone = i.Done
                 }),
             }).ToListAsync();
