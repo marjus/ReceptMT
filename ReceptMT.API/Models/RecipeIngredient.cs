@@ -14,7 +14,7 @@ namespace ReceptMT.API.Models
         public float? Amount { get; set; }
         public string Unit { get; set; }
 
-        public string IngredientGroup { get; set; }
+        public string? IngredientGroup { get; set; }
 
         [ForeignKey("Recipe")]
         public int RecipeId { get; set; }
@@ -23,6 +23,6 @@ namespace ReceptMT.API.Models
         public int IngredientId { get; set; }
 
         public virtual Ingredient Ingredient { get; set; }
-        public virtual Recipe Recipe { get; set; }
+       
     }
 }
