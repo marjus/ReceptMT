@@ -19,6 +19,7 @@ namespace ReceptMT.API.Models
 
         public string Unit { get; set; }
 
+        public int? ProductId { get; set; }
         public virtual Product Product { get; set; }
 
         public int? FromRecipeId { get; set; }

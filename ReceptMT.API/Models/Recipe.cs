@@ -10,7 +10,7 @@ namespace ReceptMT.API.Models
     public class Recipe
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Titel")]
         public string Title { get; set; }

@@ -7,8 +7,8 @@ namespace ReceptMT.API.Models
 {
     public class IngredientMapper
     {
-        public int ID { get; set; }
-        public string FromValue { get; set; }
-        public string ToValue { get; set; }
+        public int Id { get; set; }
+        public string? FromValue { get; set; }
+        public string? ToValue { get; set; }
     }
 }

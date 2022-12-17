@@ -9,9 +9,14 @@ namespace ReceptMT.API.Models
     public class RecipeCategory
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Display(Name ="Typ")]
         public string Category { get; set; }
+
+        public RecipeCategory(string category)
+        {
+            Category = category;
+        }
     }
 }

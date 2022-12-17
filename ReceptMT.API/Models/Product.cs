@@ -10,8 +10,8 @@ namespace ReceptMT.API.Models
     public class Product
     {
         [Key]
-        public int ID { get; set; }
-        public string  Name { get; set; }
+        public int Id { get; set; }
+        public string?  Name { get; set; }
         
         public string? PrimaryShoppingUnit { get; set; }
 
