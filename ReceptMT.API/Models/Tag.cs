@@ -9,8 +9,8 @@ namespace ReceptMT.API.Models
     public class Tag
     {
         [Key]
-        public int ID { get; set; }
-        public string Tagname { get; set; }
+        public int Id { get; set; }
+        public string? Tagname { get; set; }
 
         public ICollection<Recipe> Recipes { get; set; }
     }

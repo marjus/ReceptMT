@@ -10,9 +10,9 @@ namespace ReceptMT.API.Models
     public class RecipeIngredient
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         public float? Amount { get; set; }
-        public string Unit { get; set; }
+        public string? Unit { get; set; }
 
         public string? IngredientGroup { get; set; }
 

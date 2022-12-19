@@ -8,7 +8,7 @@ namespace ReceptMT.API.DTO
     {
         public int ID { get; set; }
 
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         public string? Description { get; set; }
 
@@ -20,9 +20,9 @@ namespace ReceptMT.API.DTO
 
     public class IngredientDTO
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public float? Amount { get; set; }
-        public string Unit { get; set; }
+        public string? Unit { get; set; }
     }
 }

@@ -13,7 +13,9 @@ namespace ReceptMT.API.Models
 
         [DisplayFormat(DataFormatString = "{0:yy-MM-dd}")]
         public DateTime CreatedDate { get; set; }
+
         public virtual List<ShoppingListItem> ShoppingListItems { get; set; }
+        
         public bool IsOpen { get; set; }
         public int? MenuId { get; set; }
         public virtual Menu? Menu { get; set; }

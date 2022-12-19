@@ -29,7 +29,7 @@ namespace ReceptMT.API.Controllers
             return await _context.Recipes
                 .Select(r=> new RecipeDTO 
                 { 
-                    ID = r.ID, 
+                    ID = r.Id, 
                     Title = r.Title, 
                     Description = r.Description//, 
                   //  Process = r.Process//, 
@@ -49,7 +49,7 @@ namespace ReceptMT.API.Controllers
                 return NotFound();
             }
 
-            return new RecipeDTO { ID = recipe.ID, Title = recipe.Title, Description = recipe.Description, Process = recipe.Process, 
+            return new RecipeDTO { ID = recipe.Id, Title = recipe.Title, Description = recipe.Description, Process = recipe.Process, 
                 Ingredients = recipe.Ingredients.Select(i => new IngredientDTO { Amount = i.Amount, Name = i.Ingredient.Name, Unit = i.Unit }) };
         }
 
@@ -58,7 +58,7 @@ namespace ReceptMT.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRecipe(int id, Recipe recipe)
         {
-            if (id != recipe.ID)
+            if (id != recipe.Id)
             {
                 return BadRequest();
             }
@@ -107,7 +107,7 @@ namespace ReceptMT.API.Controllers
             _context.Recipes.Add(recipe);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetRecipe), new { id = recipe.ID }, recipe);
+            return CreatedAtAction(nameof(GetRecipe), new { id = recipe.Id }, recipe);
         }
 
         // DELETE: api/Recipes/5
@@ -128,7 +128,7 @@ namespace ReceptMT.API.Controllers
 
         private bool RecipeExists(int id)
         {
-            return _context.Recipes.Any(e => e.ID == id);
+            return _context.Recipes.Any(e => e.Id == id);
         }
     }
 }

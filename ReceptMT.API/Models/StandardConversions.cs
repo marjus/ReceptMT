@@ -11,8 +11,8 @@ namespace ReceptMT.API.Models
         [Key]
         public int Id { get; set; }
         public ConverterGroup ConverterGroup { get; set; }
-        public string FromUnit { get; set; }
-        public string ToUnit { get; set; }
+        public string? FromUnit { get; set; }
+        public string? ToUnit { get; set; }
         public float ConversionFactor { get; set; }
     }
 }
