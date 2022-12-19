@@ -26,6 +26,7 @@ namespace ReceptMT.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ShoppingListDTO>>> GetShoppingList()
         {
+            var item = _context.ShoppingListItems.FirstOrDefault();
             return await _context.ShoppingLists.Select(s => new ShoppingListDTO
             {
                 Id = s.Id, 
@@ -36,7 +37,7 @@ namespace ReceptMT.API.Controllers
                 {
                     Amount = i.Amount.ToString(), 
                     Unit = i.Unit, 
-                    Product = i.Product.Name,
+                    Product = i.Product == null ? "" : i.Product.Name,
                     FromMenuId = s.MenuId, 
                     FromMenuName = s.Menu == null ? "" : s.Menu.Name,
                     FromRecipeId = i.FromRecipeId, 

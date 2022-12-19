@@ -11,7 +11,7 @@ namespace ReceptMT.API.Models
     {
         [Key]
         public int ID { get; set; }
-        public string  Name { get; set; }
+        public string?  Name { get; set; }
         
         public string? PrimaryShoppingUnit { get; set; }
 
