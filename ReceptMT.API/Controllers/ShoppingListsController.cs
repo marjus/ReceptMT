@@ -27,25 +27,32 @@ namespace ReceptMT.API.Controllers
         public async Task<ActionResult<IEnumerable<ShoppingListDTO>>> GetShoppingList()
         {
             var item = _context.ShoppingListItems.FirstOrDefault();
-            return await _context.ShoppingLists.Select(s => new ShoppingListDTO
+            var lists = _context.ShoppingLists.Where(l => l.IsOpen && l.CreatedDate > DateTime.Now.AddDays(-90));
+
+            if (lists.Any())
             {
-                Id = s.Id, 
-                Title = s.Title, 
-                IsClosed = !s.IsOpen, 
-                CreatedTime = s.CreatedDate, 
-                Items = s.ShoppingListItems.Select(i => new ShoppingListItemDTO
+                return await lists.Select(s => new ShoppingListDTO
                 {
-                    Amount = i.Amount.ToString(), 
-                    Unit = i.Unit, 
-                    Product = i.Product == null ? "" : i.Product.Name,
-                    FromMenuId = s.MenuId, 
-                    FromMenuName = s.Menu == null ? "" : s.Menu.Name,
-                    FromRecipeId = i.FromRecipeId, 
-                    FromRecipeName = i.FromRecipe == null ? "" : i.FromRecipe.Title, 
-                    Id = i.Id,
-                    IsDone = i.Done
-                }),
-            }).ToListAsync();
+                    Id = s.Id,
+                    Title = s.Title,
+                    IsClosed = !s.IsOpen,
+                    CreatedTime = s.CreatedDate,
+                    Items = s.ShoppingListItems.Select(i => new ShoppingListItemDTO
+                    {
+                        Amount = i.Amount.ToString(),
+                        Unit = i.Unit,
+                        Product = i.Product == null ? "" : i.Product.Name,
+                        FromMenuId = s.MenuId,
+                        FromMenuName = s.Menu == null ? "" : s.Menu.Name,
+                        FromRecipeId = i.FromRecipeId,
+                        FromRecipeName = i.FromRecipe == null ? "" : i.FromRecipe.Title,
+                        Id = i.Id,
+                        IsDone = i.Done
+                    }),
+                }).ToListAsync();
+            }
+            else
+                return new List<ShoppingListDTO>();
         }
 
         // GET: api/ShoppingLists/5
