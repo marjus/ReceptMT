@@ -9,13 +9,20 @@ public class RecipeContext : DbContext
 	{
 	}
 
-	public DbSet<Recipe> Recipes { get; set; }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        //modelBuilder.Entity<ShoppingListItem>()
+        //    .HasOne(p => p.Product)
+        //    .HasForeignKey(p => p.Product_Id);
+    }
+
+    public DbSet<Recipe> Recipes { get; set; }
 
 	public DbSet<Ingredient> Ingredients { get; set; }
 
 	public DbSet<ReceptMT.API.Models.Menu> Menus { get; set; }
 
-	public DbSet<ReceptMT.API.Models.ShoppingList> ShoppingLists { get; set; }
+	public DbSet<ShoppingList> ShoppingLists { get; set; }
 
     public DbSet<ReceptMT.API.Models.ShoppingListItem> ShoppingListItems { get; set; }
 
