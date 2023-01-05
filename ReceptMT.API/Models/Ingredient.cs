@@ -8,9 +8,9 @@ namespace ReceptMT.API.Models
     public class Ingredient : Product
     {
         public bool? AvoidFloatingPoints { get; set; }
-        public virtual ConverterGroup ConverterGroup { get; set; }
+    //    public virtual ConverterGroup ConverterGroup { get; set; }
 
-        public virtual List<IngredientConversion> Converters{ get; set; }
+    //    public virtual List<IngredientConversion> Converters{ get; set; }
 
     }
 }

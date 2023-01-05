@@ -27,7 +27,7 @@ namespace ReceptMT.API.Controllers
         public async Task<ActionResult<IEnumerable<ShoppingListDTO>>> GetShoppingList()
         {
             var item = _context.ShoppingListItems.FirstOrDefault();
-            var lists = _context.ShoppingLists.Where(l => l.IsOpen && l.CreatedDate > DateTime.Now.AddDays(-90));
+            var lists = _context.ShoppingLists.Where(l => l.IsOpen && l.CreatedDate > DateTime.Now.AddDays(-180));
 
             if (lists.Any())
             {

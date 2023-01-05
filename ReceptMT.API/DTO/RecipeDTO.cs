@@ -15,7 +15,7 @@ namespace ReceptMT.API.DTO
 
         public string? Process { get; set; }
 
-        public virtual IEnumerable<IngredientDTO>? Ingredients { get; set; }
+        public IEnumerable<IngredientDTO>? Ingredients { get; set; }
     }
 
     public class IngredientDTO

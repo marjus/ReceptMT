@@ -27,30 +27,37 @@ namespace ReceptMT.API.Controllers
         public async Task<ActionResult<IEnumerable<RecipeDTO>>> GetRecipes()
         {
             return await _context.Recipes
-                .Select(r=> new RecipeDTO 
-                { 
-                    ID = r.Id, 
-                    Title = r.Title, 
-                    Description = r.Description//, 
+                .Include(r=> r.Ingredients).ThenInclude(i => i.Ingredient)
+                .Select(r=> RecipeToDTO(r))
                   //  Process = r.Process//, 
-                  //  Ingredients = r.Ingredients.Select(i=> new IngredientDTO { Amount = i.Amount, Name = i.Ingredient.Name, Unit = i.Unit }) 
-                })
+                  //  Ingredients = r.Ingredients.Select(i=> new IngredientDTO { Amount = i.Amount, Name = i.Ingredient.Name, Unit = i.Unit })                
                 .ToListAsync();
         }
+
+        private static RecipeDTO RecipeToDTO(Recipe recipe) =>
+            new RecipeDTO
+            {
+                ID = recipe.Id,
+                Title = recipe.Title,
+                Description = recipe.Description, 
+                Ingredients = recipe.Ingredients?.Select(i => new IngredientDTO { Amount = i.Amount, Name = i.Ingredient?.Name, Unit = i.Unit })
+            };
 
         // GET: api/Recipes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RecipeDTO>> GetRecipe(int id)
         {
-            var recipe = await _context.Recipes.FindAsync(id);
+            var recipe = await _context.Recipes.Include(r=>r.Ingredients).SingleOrDefaultAsync(r => r.Id==id);
 
             if (recipe == null)
             {
                 return NotFound();
             }
 
-            return new RecipeDTO { ID = recipe.Id, Title = recipe.Title, Description = recipe.Description, Process = recipe.Process, 
-                Ingredients = recipe.Ingredients.Select(i => new IngredientDTO { Amount = i.Amount, Name = i.Ingredient.Name, Unit = i.Unit }) };
+            var recipeDTO = RecipeToDTO(recipe);
+            recipeDTO.Process = recipe.Process;
+
+            return recipeDTO;
         }
 
         // PUT: api/Recipes/5
