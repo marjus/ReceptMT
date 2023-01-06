@@ -26,6 +26,8 @@ namespace ReceptMT.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RecipeDTO>>> GetRecipes()
         {
+            // todo get from cache
+
             return await _context.Recipes
                 .Include(r=> r.Ingredients).ThenInclude(i => i.Ingredient)
                 .Select(r=> RecipeToDTO(r))
@@ -65,6 +67,8 @@ namespace ReceptMT.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRecipe(int id, Recipe recipe)
         {
+            // todo: add to cache
+
             if (id != recipe.Id)
             {
                 return BadRequest();
@@ -108,6 +112,8 @@ namespace ReceptMT.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
         {
+            // todo add to cache
+
             var ingredients = Util.InputParser.ParseIngredientList(recipe.IngredientsText);
             recipe.Ingredients = new List<RecipeIngredient>();
             recipe.Ingredients.AddRange(ingredients.Select(i => new RecipeIngredient { Amount = i.amount, Unit = i.unit, Ingredient = GetIngredient(i.ingredient) }));
@@ -121,6 +127,8 @@ namespace ReceptMT.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRecipe(int id)
         {
+            // todo remove from cache 
+            
             var recipe = await _context.Recipes.FindAsync(id);
             if (recipe == null)
             {
