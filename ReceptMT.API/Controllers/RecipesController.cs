@@ -11,7 +11,7 @@ using ReceptMT.API.Models;
 
 namespace ReceptMT.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class RecipesController : ControllerBase
     {
