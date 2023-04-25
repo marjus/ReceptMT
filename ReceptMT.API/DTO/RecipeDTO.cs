@@ -4,6 +4,7 @@ using System.Xml.Linq;
 
 namespace ReceptMT.API.DTO
 {
+
     public class RecipeDTO
     {
         public int ID { get; set; }
@@ -16,6 +17,8 @@ namespace ReceptMT.API.DTO
         public string? Process { get; set; }
 
         public IEnumerable<IngredientDTO>? Ingredients { get; set; }
+
+
     }
 
     public class IngredientDTO

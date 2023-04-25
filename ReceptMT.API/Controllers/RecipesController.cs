@@ -24,39 +24,50 @@ namespace ReceptMT.API.Controllers
 
         // GET: api/Recipes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RecipeDTO>>> GetRecipes()
+        public async Task<ActionResult<IEnumerable<RecipeListDTO>>> GetRecipes()
         {
             // todo get from cache
 
             return await _context.Recipes
-                .Include(r=> r.Ingredients).ThenInclude(i => i.Ingredient)
-                .Select(r=> RecipeToDTO(r))
-                  //  Process = r.Process//, 
-                  //  Ingredients = r.Ingredients.Select(i=> new IngredientDTO { Amount = i.Amount, Name = i.Ingredient.Name, Unit = i.Unit })                
+                .Include(r => r.Ingredients).ThenInclude(i => i.Ingredient)
+                .Select(r => ToDTO(r))
+                //  Process = r.Process//, 
+                //  Ingredients = r.Ingredients.Select(i=> new IngredientDTO { Amount = i.Amount, Name = i.Ingredient.Name, Unit = i.Unit })                
                 .ToListAsync();
         }
 
-        private static RecipeDTO RecipeToDTO(Recipe recipe) =>
-            new RecipeDTO
+        private static RecipeListDTO ToDTO(Recipe recipe) =>
+            new RecipeListDTO
             {
                 ID = recipe.Id,
                 Title = recipe.Title,
-                Description = recipe.Description, 
-                Ingredients = recipe.Ingredients?.Select(i => new IngredientDTO { Amount = i.Amount, Name = i.Ingredient?.Name, Unit = i.Unit })
+                Description = recipe.Description,
             };
+
+        private static RecipeDTO ToDetailsDTO(Recipe recipe) =>
+           new RecipeDTO
+           {
+               ID = recipe.Id,
+               Title = recipe.Title,
+               Description = recipe.Description,
+               Ingredients = recipe.Ingredients?.Select(i => new IngredientDTO { Amount = i.Amount, Name = i.Ingredient?.Name, Unit = i.Unit })
+           };
+
 
         // GET: api/Recipes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RecipeDTO>> GetRecipe(int id)
         {
-            var recipe = await _context.Recipes.Include(r=>r.Ingredients).SingleOrDefaultAsync(r => r.Id==id);
+            var recipe = await _context.Recipes
+                .Include(r=>r.Ingredients)
+                .ThenInclude(i=> i.Ingredient).SingleOrDefaultAsync(r => r.Id==id);
 
             if (recipe == null)
             {
                 return NotFound();
             }
 
-            var recipeDTO = RecipeToDTO(recipe);
+            var recipeDTO = ToDetailsDTO(recipe);
             recipeDTO.Process = recipe.Process;
 
             return recipeDTO;

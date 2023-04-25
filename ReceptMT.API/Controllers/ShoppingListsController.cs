@@ -26,8 +26,9 @@ namespace ReceptMT.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ShoppingListDTO>>> GetShoppingList()
         {
-            var item = _context.ShoppingListItems.FirstOrDefault();
-            var lists = _context.ShoppingLists.Where(l => l.IsOpen && l.CreatedDate > DateTime.Now.AddDays(-180));
+         //   var item = _context.ShoppingListItems.FirstOrDefault();
+            var lists = _context.ShoppingLists.Include(l=> l.ShoppingListItems)
+                .Where(l => l.IsOpen && l.CreatedDate > DateTime.Now.AddDays(-180));
 
             if (lists.Any())
             {
@@ -37,29 +38,34 @@ namespace ReceptMT.API.Controllers
                     Title = s.Title,
                     IsClosed = !s.IsOpen,
                     CreatedTime = s.CreatedDate,
-                    Items = s.ShoppingListItems.Select(i => new ShoppingListItemDTO
-                    {
-                        Amount = i.Amount.ToString(),
-                        Unit = i.Unit,
-                        Product = i.Product == null ? "" : i.Product.Name,
-                        FromMenuId = s.MenuId,
-                        FromMenuName = s.Menu == null ? "" : s.Menu.Name,
-                        FromRecipeId = i.FromRecipeId,
-                        FromRecipeName = i.FromRecipe == null ? "" : i.FromRecipe.Title,
-                        Id = i.Id,
-                        IsDone = i.Done
-                    }),
+                    Items = s.ShoppingListItems.Select(i => ShoppingListItemToDTO(i, s))
                 }).ToListAsync();
             }
             else
                 return new List<ShoppingListDTO>();
         }
 
+        private static ShoppingListItemDTO ShoppingListItemToDTO(ShoppingListItem item, ShoppingList list) =>
+            new ShoppingListItemDTO
+            {
+                Amount = item.Amount.ToString(),
+                Unit = item.Unit,
+                Product = item.Product == null ? "" : item.Product.Name,
+                FromMenuId = list.MenuId,
+                FromMenuName = list.Menu == null ? "" : list.Menu.Name,
+                FromRecipeId = item.FromRecipeId,
+                FromRecipeName = item.FromRecipe == null ? "" : item.FromRecipe.Title,
+                Id = item.Id,
+                IsDone = item.Done
+            };
+
         // GET: api/ShoppingLists/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ShoppingListDTO>> GetShoppingList(int id)
         {
-            var shoppingList = await _context.ShoppingLists.FindAsync(id);
+            var shoppingList = await _context.ShoppingLists
+                .Include(l => l.ShoppingListItems).ThenInclude(i=> i.Product)
+                .SingleOrDefaultAsync(l => l.Id==id);
 
             if (shoppingList == null)
             {
@@ -76,7 +82,7 @@ namespace ReceptMT.API.Controllers
                 {
                     Amount = i.Amount.ToString(),
                     Unit = i.Unit,
-                    Product = i.Product.Name,
+                    Product = i.Product?.Name,
                     FromMenuId = shoppingList.MenuId,
                     FromMenuName = shoppingList.Menu == null ? "" : shoppingList.Menu.Name,
                     FromRecipeId = i.FromRecipeId,
