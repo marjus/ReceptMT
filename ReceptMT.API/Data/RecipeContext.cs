@@ -20,7 +20,7 @@ public class RecipeContext : DbContext
 
 	public DbSet<Ingredient> Ingredients { get; set; }
 
-    public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
+  //  public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
 
 	public DbSet<Menu> Menus { get; set; }
 
