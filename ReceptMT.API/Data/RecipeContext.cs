@@ -20,11 +20,13 @@ public class RecipeContext : DbContext
 
 	public DbSet<Ingredient> Ingredients { get; set; }
 
-	public DbSet<ReceptMT.API.Models.Menu> Menus { get; set; }
+    public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
+
+	public DbSet<Menu> Menus { get; set; }
 
 	public DbSet<ShoppingList> ShoppingLists { get; set; }
 
-    public DbSet<ReceptMT.API.Models.ShoppingListItem> ShoppingListItems { get; set; }
+    public DbSet<ShoppingListItem> ShoppingListItems { get; set; }
 
-    public DbSet<ReceptMT.API.Models.Product> Products { get; set; }
+    public DbSet<Product> Products { get; set; }
 }
