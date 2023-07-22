@@ -29,7 +29,7 @@ namespace ReceptMT.API.Controllers
             // todo get from cache
 
             return await _context.Recipes
-                .Include(r => r.Ingredients).ThenInclude(i => i.Ingredient)
+                .Include(r=> r.Category)
                 .Select(r => ToDTO(r))
                 //  Process = r.Process//, 
                 //  Ingredients = r.Ingredients.Select(i=> new IngredientDTO { Amount = i.Amount, Name = i.Ingredient.Name, Unit = i.Unit })                
@@ -42,6 +42,7 @@ namespace ReceptMT.API.Controllers
                 ID = recipe.Id,
                 Title = recipe.Title,
                 Description = recipe.Description,
+                Category = recipe.Category
             };
 
         private static RecipeDTO ToDetailsDTO(Recipe recipe) =>
