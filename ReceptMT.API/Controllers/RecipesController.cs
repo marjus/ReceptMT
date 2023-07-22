@@ -42,7 +42,7 @@ namespace ReceptMT.API.Controllers
                 ID = recipe.Id,
                 Title = recipe.Title,
                 Description = recipe.Description,
-                Category = recipe.Category
+                Category = recipe.Category.Category
             };
 
         private static RecipeDTO ToDetailsDTO(Recipe recipe) =>
