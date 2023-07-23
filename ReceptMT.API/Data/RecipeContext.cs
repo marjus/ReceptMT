@@ -22,6 +22,8 @@ public class RecipeContext : DbContext
 
     public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
 
+    public DbSet<RecipeCategory> RecipeCategories { get; set; }
+
 	public DbSet<Menu> Menus { get; set; }
 
 	public DbSet<ShoppingList> ShoppingLists { get; set; }
