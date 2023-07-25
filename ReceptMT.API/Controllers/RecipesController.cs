@@ -31,10 +31,20 @@ namespace ReceptMT.API.Controllers
             return await _context.Recipes
                 .Include(r=> r.Category)
                 .Select(r => ToDTO(r))
-                //  Process = r.Process//, 
-                //  Ingredients = r.Ingredients.Select(i=> new IngredientDTO { Amount = i.Amount, Name = i.Ingredient.Name, Unit = i.Unit })                
                 .ToListAsync();
         }
+
+        //         [HttpGet]
+        // public async Task<ActionResult<IEnumerable<RecipeListDTO>>> GetRecipes(string filter)
+        // {
+        //     // todo get from cache
+
+        //     return await _context.Recipes
+        //         .Include(r=> r.Category)
+        //         .Where(r=> r.Title.ToLower().StartsWith(filter))
+        //         .Select(r => ToDTO(r))
+        //         .ToListAsync();
+        // }
 
         private static RecipeListDTO ToDTO(Recipe recipe) =>
             new RecipeListDTO
