@@ -14,6 +14,8 @@ namespace ReceptMT.API.Models
         public int Servings { get; set; }
         public 
 
+        public float Multiplier { get; set; }
+
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }
 
