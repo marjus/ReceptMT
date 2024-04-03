@@ -12,6 +12,7 @@ namespace ReceptMT.API.Models
         public int MenuId { get; set; }
         public int RecipeID { get; set; }
         public int Servings { get; set; }
+        public 
 
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }
